@@ -22,7 +22,7 @@ class MusicBot(commands.Cog):
     @commands.command()
     async def join(self, ctx):
     @commands.command()
-    async def join(self, ctx):
+    async def add(self, ctx):
 
 
 
