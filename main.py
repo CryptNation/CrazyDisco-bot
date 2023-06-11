@@ -62,7 +62,7 @@ async def join(ctx):
         channel = ctx.message.author.voice.channel
         await channel.connect()
 
-@bot.command(name = 'play ')
+@bot.command(name = 'play')
 async def play(ctx,url):
     server = ctx.message.guild
     voice_channel = server.voice_client
@@ -75,6 +75,7 @@ async def play(ctx,url):
 async def pause(ctx):
     voice_client = ctx.message.guild.voice_client
     if voice_client.is_playing():
+        await ctx.send('Pausing Audio')
         await voice_client.pause()
     else:
         await ctx.send('My Audio system has already paused this file.')
@@ -83,6 +84,7 @@ async def pause(ctx):
 async def resume(ctx):
     voice_client = ctx.message.guild.voice_client
     if voice_client.is_paused():
+        await ctx.send('Resuming Audio')
         await voice_client.resume()
     else:
         await ctx.send('My Audio system is already playing. (If this is an error please report it to cpt.crypt)')
@@ -91,6 +93,7 @@ async def resume(ctx):
 async def stop(ctx):
     voice_client = ctx.message.guild.voice_client
     if voice_client.is_connected():
+        await ctx.send('Goodbye!')
         await voice_client.disconnect()
     else:
         await ctx.send('Please understand that I am not in a voice chat..')
@@ -99,6 +102,7 @@ async def stop(ctx):
 async def stop(ctx):
     voice_client = ctx.message.guild.voice_client
     if voice_client.is_playing():
+        await ctx.send('Deactivating Audio')
         await voice_client.stop()
     else:
         await ctx.send('I am not playing anything..')
