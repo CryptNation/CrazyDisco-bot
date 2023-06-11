@@ -10,11 +10,11 @@ from dotenv import load_dotenv
 import youtube_dl
 
 load_dotenv()
-DISCORD_TOKEN = os.getenv("TOKEN")
+DISCORD_TOKEN = os.getenv("Token")
 
 intents = discord.Intents().all()
 client = discord.Client(intents = intents)
-bot = commands.Bot(command_prefix='dj!', intents=intents)
+bot = commands.Bot(command_prefix='dj! ', intents=intents)
 
 youtube_dl.utils.bug_reports_message = lambda: ''
 
@@ -56,19 +56,19 @@ class YTDLSource(discord.PCMVolumeTransformer):
 @bot.command(name='join')
 async def join(ctx):
     if not ctx.message.author.voice:
-        await ctx.send("{} is not connected to a voice channel".format(ctx.message.author.name))
+        await ctx.send('{} is not connected to a voice channel'.format(ctx.message.author.name))
         return
     else:
         channel = ctx.message.author.voice.channel
         await channel.connect()
 
-@bot.command(name = 'play_song')
+@bot.command(name = 'play ')
 async def play(ctx,url):
     server = ctx.message.guild
     voice_channel = server.voice_client
     async with ctx.typing():
         filename = await YTDLSource.from_url(url, loop = bot.loop)
-        voice_channel.play(discord.FFmpegPCMAudio(executable = "", source = filename))
+        voice_channel.play(discord.FFmpegPCMAudio(executable = "/home/container/.local/ffmpeg/ffmpeg-master-latest-linux64-gpl/bin/ffmpeg", source = filename))
     await ctx.send('**Now Playing:** {}'.format(filename))
 
 @bot.command(name = 'pause')
@@ -77,7 +77,7 @@ async def pause(ctx):
     if voice_client.is_playing():
         await voice_client.pause()
     else:
-        await ctx.sent("My Audio system has already paused this file.")
+        await ctx.send('My Audio system has already paused this file.')
 
 @bot.command(name = 'resume')
 async def resume(ctx):
@@ -85,7 +85,7 @@ async def resume(ctx):
     if voice_client.is_paused():
         await voice_client.resume()
     else:
-        await ctx.send("My Audio system is already playing. (If this is an error please report it to cpt.crypt)")
+        await ctx.send('My Audio system is already playing. (If this is an error please report it to cpt.crypt)')
 
 @bot.command(name='leave')
 async def stop(ctx):
@@ -93,7 +93,7 @@ async def stop(ctx):
     if voice_client.is_connected():
         await voice_client.disconnect()
     else:
-        await ctx.send("Please understand that I am not in a voice chat..")
+        await ctx.send('Please understand that I am not in a voice chat..')
 
 @bot.command(name='stop')
 async def stop(ctx):
@@ -101,9 +101,9 @@ async def stop(ctx):
     if voice_client.is_playing():
         await voice_client.stop()
     else:
-        await ctx.send("I am not playing anything..")
+        await ctx.send('I am not playing anything..')
 
 if __name__ == "__main__":
-    bot.run("TOKEN")
+    bot.run("Token")
 
 
